@@ -1,0 +1,495 @@
+/* CSS Variables for Theming and Reusability */
+:root {
+    /* Colors */
+    --primary-color: hsl(204, 70%, 53%);
+    --secondary-color: hsl(210, 29%, 24%);
+    --accent-color: hsl(6, 78%, 57%);
+    --background-color: hsl(210, 29%, 97%);
+    --card-background: hsl(0, 0%, 100%);
+    --text-color: hsl(0, 0%, 20%);
+    --border-color: hsl(210, 29%, 90%);
+
+    /* Measurements */
+    --border-radius: 8px;
+    --transition-speed: 0.3s;
+    --spacing-xxs: 4px;
+    --spacing-xs: 8px;
+    --spacing-sm: 12px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+
+    /* Typography */
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.25rem;
+    --font-size-xl: 1.5rem;
+
+    /* Effects */
+    --box-shadow: 0 4px 6px hsla(0, 0%, 0%, 0.1);
+    --hover-transform: translateY(-2px);
+    --hover-box-shadow: 0 6px 12px hsla(0, 0%, 0%, 0.15);
+    --card-hover-scale: 1.03;
+}
+
+/* Dark Mode Theme */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: hsl(204, 70%, 53%);
+        --secondary-color: hsl(192, 15%, 94%);
+        --accent-color: hsl(6, 78%, 57%);
+        --background-color: hsl(210, 29%, 10%);
+        --card-background: hsl(210, 29%, 15%);
+        --text-color: hsl(192, 15%, 94%);
+        --border-color: hsl(210, 29%, 20%);
+    }
+}
+
+/* Base Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Layout */
+.app-header, .app-footer {
+    background-color: var(--card-background);
+    padding: var(--spacing-md);
+    box-shadow: var(--box-shadow);
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.app-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: var(--card-background);
+    padding: var(--spacing-md);
+    border-right: 1px solid var(--border-color);
+    overflow-y: auto;
+}
+
+.inventory-view {
+    flex: 1;
+    padding: var(--spacing-md);
+    overflow-y: auto;
+}
+
+.quick-stats {
+    width: 300px;
+    background-color: var(--card-background);
+    padding: var(--spacing-md);
+    border-left: 1px solid var(--border-color);
+    overflow-y: auto;
+}
+
+/* Header Styling */
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+    margin-right: var(--spacing-sm);
+}
+
+.main-nav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.main-nav li {
+    margin-right: var(--spacing-md);
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 500;
+    transition: color var(--transition-speed) ease;
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: var(--primary-color);
+}
+
+.user-actions {
+    display: flex;
+    align-items: center;
+}
+
+.user-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: var(--spacing-sm);
+    color: var(--text-color);
+    transition: color var(--transition-speed) ease;
+}
+
+.user-actions button:hover {
+    color: var(--primary-color);
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    margin-left: var(--spacing-md);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: var(--spacing-xs);
+}
+
+/* Sidebar Styling */
+.search-container {
+    display: flex;
+    margin-bottom: var(--spacing-md);
+}
+
+#card-search {
+    flex: 1;
+    padding: var(--spacing-sm);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--font-size-md);
+}
+
+#advanced-search {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    margin-left: var(--spacing-xs);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+#advanced-search:hover {
+    background-color: var(--accent-color);
+}
+
+.category-nav ul {
+    padding: 0;
+    list-style-type: none;
+}
+
+.category-nav a {
+    display: block;
+    padding: var(--spacing-sm);
+    text-decoration: none;
+    color: var(--text-color);
+    border-radius: var(--border-radius);
+    transition: background-color var(--transition-speed) ease;
+}
+
+.category-nav a:hover, .category-nav a.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.filter-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.filter-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+}
+
+.filter-group select {
+    width: 100%;
+    padding: var(--spacing-xs);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    background-color: var(--card-background);
+    color: var(--text-color);
+}
+
+.color-options {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.color-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    transition: transform var(--transition-speed) ease;
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Inventory View Styling */
+.inventory-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.view-options {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.view-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: var(--spacing-xs);
+    color: var(--text-color);
+    transition: color var(--transition-speed) ease;
+}
+
+.view-btn:hover, .view-btn.active {
+    color: var(--primary-color);
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.card-item {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.card-item:hover {
+    transform: var(--hover-transform);
+    box-shadow: var(--hover-box-shadow);
+}
+
+.card-image {
+    width: 100%;
+    height: auto;
+}
+
+.card-info {
+    padding: var(--spacing-sm);
+}
+
+.card-name {
+    margin: 0 0 var(--spacing-xs);
+    font-size: var(--font-size-md);
+}
+
+.card-type, .card-rarity {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--secondary-color);
+}
+
+.card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-sm);
+    background-color: var(--background-color);
+}
+
+.quantity-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: var(--font-size-md);
+    cursor: pointer;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.quantity-btn:hover {
+    background-color: var(--accent-color);
+}
+
+.card-quantity {
+    font-weight: bold;
+}
+
+/* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--spacing-lg);
+}
+
+.pagination button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: color var(--transition-speed) ease;
+}
+
+.pagination button:hover {
+    color: var(--primary-color);
+}
+
+#page-info {
+    margin: 0 var(--spacing-md);
+}
+
+/* Quick Stats Styling */
+.stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-sm);
+}
+
+.stat-label {
+    color: var(--secondary-color);
+}
+
+.stat-value {
+    font-weight: bold;
+}
+
+/* Chart Container */
+.chart-container {
+    margin-top: var(--spacing-lg);
+}
+
+/* Footer Styling */
+.app-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-left: var(--spacing-md);
+    transition: color var(--transition-speed) ease;
+}
+
+.footer-nav a:hover {
+    color: var(--primary-color);
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0, 0%, 0%, 0.5);
+}
+
+.modal-content {
+    background-color: var(--card-background);
+    margin: 10% auto;
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius);
+    max-width: 500px;
+    box-shadow: var(--box-shadow);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .app-content {
+        flex-direction: column;
+    }
+
+    .sidebar, .quick-stats {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+}
+
+@media (max-width: 768px) {
+    .app-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .main-nav {
+        margin-top: var(--spacing-md);
+    }
+
+    .user-actions {
+        margin-top: var(--spacing-md);
+    }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+.visually-hidden {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+}
+
+/* Focus Styles */
+:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .app-header, .sidebar, .quick-stats, .app-footer {
+        display: none;
+    }
+
+    .app-content {
+        display: block;
+    }
+
+    .card-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}

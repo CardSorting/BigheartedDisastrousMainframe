@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive card game inventory with advanced filtering and visualization">
+    <title>Card Master Pro | Advanced Inventory Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" defer></script>
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo-container">
+            <img src="logo.svg" alt="Card Master Pro Logo" class="logo">
+            <h1>Card Master Pro</h1>
+        </div>
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#inventory" class="active">Inventory</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </nav>
+        <div class="user-actions">
+            <button id="theme-toggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button id="notifications" aria-label="Notifications">
+                <i class="fas fa-bell"></i>
+            </button>
+            <div class="user-profile">
+                <img src="user-avatar.jpg" alt="User avatar" class="avatar">
+                <span class="username">John Doe</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="app-content">
+        <aside class="sidebar">
+            <div class="search-container">
+                <input type="search" id="card-search" placeholder="Search cards..." aria-label="Search cards">
+                <button id="advanced-search" aria-label="Advanced search options">
+                    <i class="fas fa-sliders-h"></i>
+                </button>
+            </div>
+            <nav class="category-nav">
+                <h2>Categories</h2>
+                <ul>
+                    <li><a href="#lands" class="active">Lands</a></li>
+                    <li><a href="#instants-sorceries">Instants and Sorceries</a></li>
+                    <li><a href="#other-spells">Other Spells</a></li>
+                    <li><a href="#sideboard">Sideboard</a></li>
+                </ul>
+            </nav>
+            <div class="filters">
+                <h2>Filters</h2>
+                <div class="filter-group">
+                    <label for="rarity-filter">Rarity</label>
+                    <select id="rarity-filter">
+                        <option value="">All</option>
+                        <option value="common">Common</option>
+                        <option value="uncommon">Uncommon</option>
+                        <option value="rare">Rare</option>
+                        <option value="mythic">Mythic</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="color-filter">Color</label>
+                    <div class="color-options">
+                        <button class="color-btn" data-color="white" aria-label="White"><i class="ms ms-w"></i></button>
+                        <button class="color-btn" data-color="blue" aria-label="Blue"><i class="ms ms-u"></i></button>
+                        <button class="color-btn" data-color="black" aria-label="Black"><i class="ms ms-b"></i></button>
+                        <button class="color-btn" data-color="red" aria-label="Red"><i class="ms ms-r"></i></button>
+                        <button class="color-btn" data-color="green" aria-label="Green"><i class="ms ms-g"></i></button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="inventory-view" aria-label="Card Inventory">
+            <header class="inventory-header">
+                <h2 id="current-category">Lands</h2>
+                <div class="view-options">
+                    <button id="grid-view" class="view-btn active" aria-label="Grid view">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button id="list-view" class="view-btn" aria-label="List view">
+                        <i class="fas fa-list"></i>
+                    </button>
+                    <button id="compact-view" class="view-btn" aria-label="Compact view">
+                        <i class="fas fa-th"></i>
+                    </button>
+                </div>
+            </header>
+            <div class="card-grid" id="card-container">
+                <!-- Card items will be dynamically inserted here -->
+            </div>
+            <div class="pagination">
+                <button id="prev-page" aria-label="Previous page"><i class="fas fa-chevron-left"></i></button>
+                <span id="page-info">Page 1 of 5</span>
+                <button id="next-page" aria-label="Next page"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </section>
+
+        <aside class="quick-stats">
+            <h2>Quick Stats</h2>
+            <div class="stat-item">
+                <span class="stat-label">Total Cards</span>
+                <span class="stat-value" id="total-count">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Unique Cards</span>
+                <span class="stat-value" id="unique-count">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Average CMC</span>
+                <span class="stat-value" id="avg-cmc">0</span>
+            </div>
+            <div class="chart-container">
+                <canvas id="card-distribution-chart"></canvas>
+            </div>
+        </aside>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2024 Card Master Pro. All rights reserved.</p>
+        <nav class="footer-nav">
+            <a href="#terms">Terms of Service</a>
+            <a href="#privacy">Privacy Policy</a>
+            <a href="#contact">Contact Us</a>
+        </nav>
+    </footer>
+
+    <div id="modal-container" class="modal" aria-hidden="true">
+        <!-- Modal content will be dynamically inserted here -->
+    </div>
+
+    <template id="card-template">
+        <div class="card-item" tabindex="0">
+            <img src="" alt="" class="card-image">
+            <div class="card-info">
+                <h3 class="card-name"></h3>
+                <p class="card-type"></p>
+                <p class="card-rarity"></p>
+            </div>
+            <div class="card-actions">
+                <button class="quantity-btn minus" aria-label="Decrease quantity">-</button>
+                <span class="card-quantity"></span>
+                <button class="quantity-btn plus" aria-label="Increase quantity">+</button>
+            </div>
+        </div>
+    </template>
+</body>
+</html>
